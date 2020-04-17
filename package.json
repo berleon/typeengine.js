@@ -1,0 +1,35 @@
+{
+  "name": "typeengine",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node ./node_modules/frontend-dependencies/index.js"
+  },
+  "author": "Leon Sixt",
+  "license": "MIT",
+  "devDependencies": {
+    "shelljs": "0.7.4"
+  },
+  "frontendDependencies": {
+    "target": "static/",
+    "packages": {
+      "normalize.css": "4.2.0",
+      "jquery": {
+        "version": "3.1.0",
+        "src": "dist/*",
+        "namespaced": true
+      },
+      "turbolinks": {
+        "url": "git://github.com/turbolinks/turbolinks.git",
+        "src": "{src,LICENSE}",
+        "target": "static/turbo"
+      },
+      "hyphen" : "1.5.1"
+    }
+  },
+  "dependencies": {
+    "frontend-dependencies": "^1.1.8"
+  }
+}
