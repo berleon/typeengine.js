@@ -245,6 +245,7 @@ TypeEngine.linebreak = (function() {
         activeNodes.push(new TypeEngine.LinkedList.Node(breakpoint(0, 0, 0, 0, 0, undefined, null)));
 
         nodes.forEach(function (node, index, nodes) {
+            // console.log(node)
             if (node.type === 'box') {
                 sum.width += node.width;
             } else if (node.type === 'glue') {
@@ -282,29 +283,33 @@ TypeEngine.linebreak = (function() {
 
     linebreak.infinity = 10000;
 
-    linebreak.glue = function (width, stretch, shrink) {
+    linebreak.glue = function (width, stretch, shrink, elem) {
         return {
             type: 'glue',
             width: width,
             stretch: stretch,
-            shrink: shrink
+            shrink: shrink,
+            elem: elem,
         };
     };
 
-    linebreak.box = function (width, value) {
+    linebreak.box = function (width, value, elem, stretchable) {
         return {
             type: 'box',
             width: width,
-            value: value
+            value: value,
+            elem: elem,
+            stretchable: stretchable,
         };
     };
 
-    linebreak.penalty = function (width, penalty, flagged) {
+    linebreak.penalty = function (width, penalty, flagged, elem) {
         return {
             type: 'penalty',
             width: width,
             penalty: penalty,
-            flagged: flagged
+            flagged: flagged,
+            elem: elem,
         };
     };
 
