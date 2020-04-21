@@ -16,16 +16,6 @@
     "target": "static/",
     "packages": {
       "normalize.css": "4.2.0",
-      "jquery": {
-        "version": "3.1.0",
-        "src": "dist/*",
-        "namespaced": true
-      },
-      "turbolinks": {
-        "url": "git://github.com/turbolinks/turbolinks.git",
-        "src": "{src,LICENSE}",
-        "target": "static/turbo"
-      },
       "hyphen" : "1.5.1"
     }
   },

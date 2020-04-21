@@ -11,6 +11,7 @@
         /*src: url("Inconsolata-VF.ttf") format("truetype");*/
         /*src: url("Inconsolata-VF.ttf") format("truetype");*/
         font-style: normal;
+        font-stretch: 1% 500%; /* Requi*/
       }
 
       .container {
@@ -18,12 +19,14 @@
         width: 1300px;
         font-size: 16px;
         font-family: "MyFont";
+        line-height: 1.3em;
       }
 
       .page {
         width: 400px;
         margin: 50px;
         float: left;
+        line-break: strict;
       }
 
       #css_typeset {
@@ -35,20 +38,20 @@
      <script src="https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js"></script>
      <script type="text/javascript" src="static/hyphen/hyphen.js"></script>
      <script type="text/javascript" src="static/hyphen/patterns/de-1996.js"></script>
-     <script type="text/javascript" src="linebreak.js"></script>
-     <script type="text/javascript" src="typeengine-fonts/computer-modern/cmunrm-VF.js"></script>
-     <script type="text/javascript" src="typeengine.js"></script>
+     <script type="text/javascript" src="static/hyphen/patterns/en-us.js"></script>
+     <script type="text/javascript" src="../../src/linebreak.js"></script>
+     <script type="text/javascript" src="../../src/typeengine.js"></script>
    </head>
    <body>
      <div class='container'>
        <div id='css_typeset' class='page'>
-         <p>Aufklärung ist der <strong>Ausgang des Menschen aus seiner selbst verschuldeten Unmündigkeit. Unmündigkeit ist das Unvermögen, sich seines Verstandes ohne Leitung eines anderen zu bedienen. Selbstverschuldet ist diese Unmündigkeit, wenn die Ursache derselben nicht am Mangel des Verstandes, sondern der Entschließung und des Muthes liegt, sich seiner ohne Leitung eines andern zu bedienen. Sapere aude![2] Habe Muth dich deines eigenen Verstandes zu bedienen! ist also der Wahlspruch der Aufklärung.</p>
+         <p>Aufklärung ist der Ausgang des Menschen aus seiner selbst verschuldeten Unmündigkeit. Unmündigkeit ist das Unvermögen, sich seines Verstandes ohne Leitung eines anderen zu bedienen. Selbstverschuldet ist diese Unmündigkeit, wenn die Ursache derselben nicht am Mangel des Verstandes, sondern der Entschließung und des Muthes liegt, sich seiner ohne Leitung eines andern zu bedienen. Sapere aude! [2] Habe Muth dich deines eigenen Verstandes zu bedienen! ist also der Wahlspruch der Aufklärung.</p>
          <p>Faulheit und Feigheit sind die Ursachen, warum ein so großer Theil der Menschen, nachdem sie die Natur längst von fremder Leitung frei gesprochen [482] (naturaliter majorennes), dennoch gerne Zeitlebens unmündig bleiben; und warum es Anderen so leicht wird, sich zu deren Vormündern aufzuwerfen. Es ist so bequem, unmündig zu sein. Habe ich ein Buch, das für mich Verstand hat, einen Seelsorger, der für mich Gewissen hat, einen Arzt der für mich die Diät beurtheilt, u.s.w. so brauche ich mich ja nicht selbst zu bemühen. Ich habe nicht nöthig zu denken, wenn ich nur bezahlen kann; andere werden das verdrießliche Geschäft schon für mich übernehmen. Daß der bei weitem größte Theil der Menschen (darunter das ganze schöne Geschlecht) den Schritt zur Mündigkeit, außer dem daß er beschwerlich ist, auch für sehr gefährlich halte: dafür sorgen schon jene Vormünder, die die Oberaufsicht über sie gütigst auf sich genommen haben. Nachdem sie ihr Hausvieh zuerst dumm gemacht haben, und sorgfältig verhüteten, daß diese ruhigen Geschöpfe ja keinen Schritt außer dem Gängelwagen, darin sie sie einsperreten, wagen durften; so zeigen sie ihnen nachher die Gefahr, die ihnen drohet, wenn sie es versuchen allein zu gehen. Nun ist diese Gefahr zwar eben so groß nicht, denn sie würden durch einigemahl Fallen wohl endlich gehen lernen; allein ein Beispiel von der Art macht doch schüchtern, und schrekt gemeiniglich von allen ferneren Versuchen ab.</p>
          <p>Es ist also für jeden einzelnen Menschen schwer, sich aus der ihm beinahe zur Natur gewordenen Unmündigkeit [483] herauszuarbeiten. Er hat sie sogar lieb gewonnen, und ist vor der Hand wirklich unfähig, sich seines eigenen Verstandes zu bedienen, weil man ihn niemals den Versuch davon machen ließ. Satzungen und Formeln, diese mechanischen Werkzeuge eines vernünftigen Gebrauchs oder vielmehr Mißbrauchs seiner Naturgaben, sind die Fußschellen einer immerwährenden Unmündigkeit. Wer sie auch abwürfe, würde dennoch auch über den schmalesten Graben einen nur unsicheren Sprung thun, weil er zu dergleichen freier Bewegung nicht gewöhnt ist. Daher giebt es nur Wenige, denen es gelungen ist, durch eigene Bearbeitung ihres Geistes sich aus der Unmündigkeit heraus zu wikkeln, und dennoch einen sicheren Gang zu thun.</p>
        </div>
 
        <div id='js_typeset' class='page typeset'>
-         <p>Aufklärung ist der Ausgang des Menschen aus seiner selbst verschuldeten Unmündigkeit. Unmündigkeit ist das Unvermögen, sich seines Verstandes ohne Leitung eines anderen zu bedienen. Selbstverschuldet ist diese Unmündigkeit, wenn die Ursache derselben nicht am Mangel des Verstandes, sondern der Entschließung und des Muthes liegt, sich seiner ohne Leitung eines andern zu bedienen. Sapere aude![2] Habe Muth dich deines eigenen Verstandes zu bedienen! ist also der Wahlspruch der Aufklärung.</p>
+         <p>Aufklärung ist der Ausgang des Menschen aus seiner selbst verschuldeten Unmündigkeit. Unmündigkeit ist das Unvermögen, sich seines Verstandes ohne Leitung eines anderen zu bedienen. Selbstverschuldet ist diese Unmündigkeit, wenn die Ursache derselben nicht am Mangel des Verstandes, sondern der Entschließung und des Muthes liegt, sich seiner ohne Leitung eines andern zu bedienen. Sapere aude![3456 Habe Muth dich deines eigenen Verstandes zu bedienen! ist also der Wahlspruch der Aufklärung.</p>
          <p>Faulheit und Feigheit sind die Ursachen, warum ein so großer Theil der Menschen, nachdem sie die Natur längst von fremder Leitung frei gesprochen [482] (naturaliter majorennes), dennoch gerne Zeitlebens unmündig bleiben; und warum es Anderen so leicht wird, sich zu deren Vormündern aufzuwerfen. Es ist so bequem, unmündig zu sein. Habe ich ein Buch, das für mich Verstand hat, einen Seelsorger, der für mich Gewissen hat, einen Arzt der für mich die Diät beurtheilt, u.s.w. so brauche ich mich ja nicht selbst zu bemühen. Ich habe nicht nöthig zu denken, wenn ich nur bezahlen kann; andere werden das verdrießliche Geschäft schon für mich übernehmen. Daß der bei weitem größte Theil der Menschen (darunter das ganze schöne Geschlecht) den Schritt zur Mündigkeit, außer dem daß er beschwerlich ist, auch für sehr gefährlich halte: dafür sorgen schon jene Vormünder, die die Oberaufsicht über sie gütigst auf sich genommen haben. Nachdem sie ihr Hausvieh zuerst dumm gemacht haben, und sorgfältig verhüteten, daß diese ruhigen Geschöpfe ja keinen Schritt außer dem Gängelwagen, darin sie sie einsperreten, wagen durften; so zeigen sie ihnen nachher die Gefahr, die ihnen drohet, wenn sie es versuchen allein zu gehen. Nun ist diese Gefahr zwar eben so groß nicht, denn sie würden durch einigemahl Fallen wohl endlich gehen lernen; allein ein Beispiel von der Art macht doch schüchtern, und schrekt gemeiniglich von allen ferneren Versuchen ab.</p>
          <p>Es ist also für jeden einzelnen Menschen schwer, sich aus der ihm beinahe zur Natur gewordenen Unmündigkeit [483] herauszuarbeiten. Er hat sie sogar lieb gewonnen, und ist vor der Hand wirklich unfähig, sich seines eigenen Verstandes zu bedienen, weil man ihn niemals den Versuch davon machen ließ. Satzungen und Formeln, diese mechanischen Werkzeuge eines vernünftigen Gebrauchs oder vielmehr Mißbrauchs seiner Naturgaben, sind die Fußschellen einer immerwährenden Unmündigkeit. Wer sie auch abwürfe, würde dennoch auch über den schmalesten Graben einen nur unsicheren Sprung thun, weil er zu dergleichen freier Bewegung nicht gewöhnt ist. Daher giebt es nur Wenige, denen es gelungen ist, durch eigene Bearbeitung ihres Geistes sich aus der Unmündigkeit heraus zu wikkeln, und dennoch einen sicheren Gang zu thun.</p>
        </div>
