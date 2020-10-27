@@ -1,6 +1,9 @@
-if ("undefined" === typeof TypeEngine) {
-    var TypeEngine = {};
-}
+import {hyphenate, hyphenateSync} from "hyphen/en";
+import fontConfigs from "../font-protrusion.json";
+
+
+export default TypeEngine = {};
+
 
 TypeEngine.linebreak = (function() {
     /**
@@ -635,6 +638,7 @@ TypeEngine.formatter.defaults = {
     }
 };
 */
+
 TypeEngine.typeset = function (containerElem, options) {
     function createSpan(part) {
         let elem = document.createElement('span');
@@ -657,7 +661,7 @@ TypeEngine.typeset = function (containerElem, options) {
         let nodes = [];
 
         words.filter(word => word !== "").forEach(function (word, index, array) {
-            var hyphenated = hyphenate(word).split(hyphenShy);
+            var hyphenated = hyphenateSync(word).split(hyphenShy);
             if (hyphenated.length > 1) {
                 hyphenated.forEach(function (part, partIndex, partArray) {
                     if (partIndex !== partArray.length - 1) {
@@ -758,7 +762,7 @@ TypeEngine.typeset = function (containerElem, options) {
     function wordsToNodes(words) {
         var nodes = [];
         words.forEach(function (word, index, array) {
-            var hyphenated = hyphenate(word).split(String.fromCodePoint(0x00AD));
+            var hyphenated = hyphenateSync(word).split(String.fromCodePoint(0x00AD));
             if (hyphenated.length > 1) {
                 hyphenated.forEach(function (part, partIndex, partArray) {
                     nodes.push(linebreak.box(measureString(part), part));
@@ -904,18 +908,27 @@ TypeEngine.typeset = function (containerElem, options) {
                 overhangRight = 0;
             }
             let overhang = overhangLeft + overhangRight;
-            linewidthWOverhang = linewidth - overhangMargin + overhang + 2*borderWidth*nBoxes;
+            let linewidthWOverhang = linewidth - overhangMargin + overhang + 2*borderWidth*nBoxes;
             //linewidthWOverhang = linewidth; // - overhangMargin + overhang + 2*borderWidth*nBoxes;
             let unusedOverhang = linewidth - linewidthWOverhang;
             let nonStretchableBox = boxWidth - stretchableBoxWidth;
             let perfectStretch = (linewidthWOverhang - nGlues * space.width - nonStretchableBox) / stretchableBoxWidth;
 
-            var stretch = Math.max(options.minStretch, Math.min(perfectStretch, options.maxStretch));
+            if (options.stretch === 'none') {
+                var stretch = 1;
+            } else {
+                var stretch = Math.max(options.minStretch, Math.min(perfectStretch, options.maxStretch));
+            }
             // stretch = perfectStretch;
             // stretch = 0.9;
             let stretchPerc = stretch * 100;
             let boxWidthStretched = stretchableBoxWidth * stretch;
-            let extraBoxWidth = 0.000;
+            let extraBoxWidth = 0;
+            if (options.stretch !== 'none') {
+                // needed to fix webkit and chrome low size resolutions
+                extraBoxWidth = 0.003;
+            }
+
             let extraBoxWidthTotal = extraBoxWidth * boxWidth;
             let totalWhiteSpace = (linewidthWOverhang - boxWidthStretched - nonStretchableBox
                                    - extraBoxWidthTotal
@@ -946,12 +959,16 @@ TypeEngine.typeset = function (containerElem, options) {
                 if (node.type == 'box') {
                     // margin-left: -1px; margin-right: -1px;
                     let style = "display: inline-block; inline-size: fit-content;";
-                    if (node.stretchable) {
-                        let nodeWidth = node.width * stretch * (extraBoxWidth + 1);
-                        style += `width: ${nodeWidth}px; transform: scaleX(${stretch}); transform-origin: 0 0;`;
-                    }
                     if (j == firstNodeIdx) {
                         style += `margin-left: -${overhangLeft}px;`;
+                    }
+                    if (node.stretchable) {
+                        let scaledNodeWidth = node.width * stretch * (extraBoxWidth + 1);
+                        if (options.stretch === 'font-stretch') {
+                            style += `width: ${scaledNodeWidth}px; font-stretch: ${stretchPerc}%;`;
+                        } else if (options.stretch === 'transform') {
+                            style += `width: ${node.width * (extraBoxWidth + 1)}px; margin-right: ${scaledNodeWidth-node.width}px; transform: scaleX(${stretch}); transform-origin: 0 0;`;
+                        }
                     }
                     if (borderWidth !== 0) {
                         style += `display: inline-block; border: ${borderWidth}px solid red;  box-sizing: border-box;`;
@@ -983,13 +1000,13 @@ TypeEngine.typeset = function (containerElem, options) {
     let hyphenPenalty = 100;
 
     var space = {
-        width: fontSize / 3. ,
+        width: options.space.width * fontSize,
         stretch: 0,
         shrink: 0
     };
 
-    space.stretch = space.width * 6. / 6.;
-    space.shrink = space.width * 2. / 6.;
+    space.stretch = space.width * options.space.stretch;
+    space.shrink = space.width * options.space.shrink;
 
     var t0 = performance.now();
 
@@ -1019,12 +1036,6 @@ TypeEngine.typeset = function (containerElem, options) {
     formatterHTML(inlineNodes, breaks, [textWidth - 2]);
 }
 
-// hyphenate = window.createHyphenator(hyphenationPatternsDe1996);
-hyphenate = window.createHyphenator(hyphenationPatternsEnUs);
-
-let fontProtrusionDataUrl = 'typeengine-fonts/font-protrusion.json';
-
-let fontData = null;
 
 function selectFontConfig(fontConfigs, name, shape) {
     for (let cfg of fontConfigs) {
@@ -1035,19 +1046,7 @@ function selectFontConfig(fontConfigs, name, shape) {
     }
 }
 
-let windowLoaded = new Promise((done, fail) => {
-    window.addEventListener("load", function(event) {
-        done();
-    });
-})
-
-let fontConfigsFetched = fetch(fontProtrusionDataUrl)
-  .then((response) => {
-      return response.json();
-    })
-
-Promise.all([fontConfigsFetched, windowLoaded]).then((promisedValues) => {
-    let fontConfigs = promisedValues[0];
+window.addEventListener("load", function(event) {
     let fontConfig = selectFontConfig(fontConfigs, 'cmr', 'nr');
 
     // TODO: bind config to fonts
@@ -1065,12 +1064,19 @@ Promise.all([fontConfigsFetched, windowLoaded]).then((promisedValues) => {
         let text = p.textContent;
         var style = window.getComputedStyle(p, null).getPropertyValue('font-size');
         var fontSize = parseFloat(style);
-        typeset(p, {
+        TypeEngine.typeset(p, {
             'fontSize': fontSize,
             'textWidth': 400,
-            'minStretch': 0.97,
-            'maxStretch': 1.03,
+            'minStretch': 0.98,
+            'maxStretch': 1.02,
             'fontConfig': fontConfig,
+            //'stretch': 'font-stretch',
+            'stretch': 'transform',
+            'space': {
+                width: 1./4.,
+                stretch: 1/2.,
+                shrink: 1/3.,
+            }
         });
     }
 });

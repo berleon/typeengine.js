@@ -10,13 +10,16 @@
   "author": "Leon Sixt",
   "license": "MIT",
   "devDependencies": {
-    "shelljs": "0.7.4"
+    "hyphen": "^1.6.2",
+    "shelljs": "0.7.4",
+    "webpack": "^5.3.0",
+    "webpack-cli": "^4.1.0"
   },
   "frontendDependencies": {
     "target": "static/",
     "packages": {
       "normalize.css": "4.2.0",
-      "hyphen" : "1.5.1"
+      "hyphen": "1.5.1"
     }
   },
   "dependencies": {
