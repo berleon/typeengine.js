@@ -11,7 +11,7 @@
   "license": "MIT",
   "devDependencies": {
     "hyphen": "^1.6.2",
-    "shelljs": "0.7.4",
+    "shelljs": "0.8.5",
     "webpack": "^5.3.0",
     "webpack-cli": "^4.1.0"
   },
